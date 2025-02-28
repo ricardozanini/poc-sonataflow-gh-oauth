@@ -34,4 +34,4 @@ mvn clean quarkus:dev
 
 Just go to the domain you created with ngrok, and you should see the web application. Give consent to GitHub and try calling the workflow, you should see your data information. See the screencast below:
 
-![demo screencast](docs/demo-screencast.mov)
+<video src="https://github.com/ricardozanini/poc-sonataflow-gh-oauth/raw/refs/heads/main/docs/demo-screencast.mov"></video>
