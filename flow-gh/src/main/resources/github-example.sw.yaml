@@ -1,0 +1,18 @@
+id: github-example
+version: '1.0'
+specVersion: '0.8'
+name: github-example
+description: Example of Token Propagation calling GitHub API
+start: GetUserInfo
+functions:
+  - name: getUserInfo
+    operation: specs/github-api.min.yaml#users/get-authenticated
+states:
+  - name: GetUserInfo
+    type: operation
+    actions:
+      - functionRef:
+          refName: getUserInfo
+    stateDataFilter:
+      output: "${ { githubUser: { login, name, location }  } }"
+    end: true

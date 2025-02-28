@@ -1,0 +1,624 @@
+# API Spec minified with `kn workflow specs minify openapi` command from the dir `src/main/resources` in this project.
+# The original one is quite large, and we are using only one operation.
+info:
+  contact:
+    name: Support
+    url: https://support.github.com/contact?tags=dotcom-rest-api
+  description: GitHub's v3 REST API.
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT
+  termsOfService: https://docs.github.com/articles/github-terms-of-service
+  title: GitHub v3 REST API
+  version: 1.1.4
+  x-github-plan: ghes
+  x-github-release: 3.16
+openapi: 3.0.3
+paths:
+  /user:
+    get:
+      description: OAuth app tokens and personal access tokens (classic) need the `user` scope in order for the response to include private profile information.
+      externalDocs:
+        description: API method documentation
+        url: https://docs.github.com/enterprise-server@3.16/rest/users/users#get-the-authenticated-user
+      operationId: users/get-authenticated
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                response-with-public-and-private-profile-information:
+                  $ref: '#/components/examples/private-user-response-with-public-and-private-profile-information'
+                response-with-public-profile-information:
+                  $ref: '#/components/examples/private-user-response-with-public-profile-information'
+              schema:
+                discriminator:
+                  mapping:
+                    private: '#/components/schemas/private-user'
+                    public: '#/components/schemas/public-user'
+                  propertyName: user_view_type
+                oneOf:
+                  - $ref: '#/components/schemas/private-user'
+                  - $ref: '#/components/schemas/public-user'
+          description: Response
+        "304":
+          $ref: '#/components/responses/not_modified'
+        "401":
+          $ref: '#/components/responses/requires_authentication'
+        "403":
+          $ref: '#/components/responses/forbidden'
+      summary: Get the authenticated user
+      tags:
+        - users
+      security:
+        - bearer:
+            - ""
+      x-github:
+        category: users
+        enabledForGitHubApps: false
+        githubCloudOnly: false
+        subcategory: users
+servers:
+  - url: https://api.github.com/
+    variables:
+      hostname:
+        default: HOSTNAME
+        description: Self-hosted Enterprise Server hostname
+      protocol:
+        default: http
+        description: Self-hosted Enterprise Server protocol
+tags:
+  - description: Endpoints to manage GitHub Actions using the REST API.
+    name: actions
+  - description: Activity APIs provide access to notifications, subscriptions, and timelines.
+    name: activity
+  - description: Information for integrations and installations.
+    name: apps
+  - description: Monitor charges and usage from Actions and Packages.
+    name: billing
+  - description: Rich interactions with checks run by your integrations.
+    name: checks
+  - description: Retrieve code scanning alerts from a repository.
+    name: code-scanning
+  - description: Insight into codes of conduct for your communities.
+    name: codes-of-conduct
+  - description: List emojis available to use on GitHub.
+    name: emojis
+  - description: Endpoints to manage Dependabot.
+    name: dependabot
+  - description: Endpoints to access Dependency Graph features.
+    name: dependency-graph
+  - description: View, modify your gists.
+    name: gists
+  - description: Raw Git functionality.
+    name: git
+  - description: View gitignore templates
+    name: gitignore
+  - description: Interact with GitHub Issues.
+    name: issues
+  - description: View various OSS licenses.
+    name: licenses
+  - description: Render GitHub flavored markdown
+    name: markdown
+  - description: Interact with GitHub Merge Queues.
+    name: merge-queue
+  - description: Endpoints that give information about the API.
+    name: meta
+  - description: Move projects to or from GitHub.
+    name: migrations
+  - description: Endpoints to manage GitHub OIDC configuration using the REST API.
+    name: oidc
+  - description: Interact with GitHub Orgs.
+    name: orgs
+  - description: Manage packages for authenticated users and organizations.
+    name: packages
+  - description: Interact with GitHub Projects.
+    name: projects
+  - description: Interact with GitHub Pull Requests.
+    name: pulls
+  - description: Check your current rate limit status
+    name: rate-limit
+  - description: Interact with reactions to various GitHub entities.
+    name: reactions
+  - description: Interact with GitHub Repos.
+    name: repos
+  - description: Look for stuff on GitHub.
+    name: search
+  - description: Retrieve secret scanning alerts from a repository.
+    name: secret-scanning
+  - description: Interact with GitHub Teams.
+    name: teams
+  - description: Interact with and view information about users and also current user.
+    name: users
+  - description: Provisioning of GitHub organization membership for SCIM-enabled providers.
+    name: scim
+  - description: Enterprise Administration
+    name: enterprise-admin
+  - description: OAuth Authorizations API
+    name: oauth-authorizations
+  - description: Security Advisories API
+    name: security-advisories
+  - description: Endpoints to manage code security using the REST API.
+    name: code-security
+  - description: Manage private registry configurations.
+    name: private-registries
+components:
+  examples:
+    private-user-response-with-public-and-private-profile-information:
+      summary: Response with public and private profile information
+      value:
+        avatar_url: https://github.com/images/error/octocat_happy.gif
+        bio: There once was...
+        blog: https://github.com/blog
+        collaborators: 8
+        company: GitHub
+        created_at: "2008-01-14T04:33:35Z"
+        disk_usage: 10000
+        email: octocat@github.com
+        events_url: https://api.github.com/users/octocat/events{/privacy}
+        followers: 20
+        followers_url: https://api.github.com/users/octocat/followers
+        following: 0
+        following_url: https://api.github.com/users/octocat/following{/other_user}
+        gists_url: https://api.github.com/users/octocat/gists{/gist_id}
+        gravatar_id: ""
+        hireable: false
+        html_url: https://github.com/octocat
+        id: 1
+        location: San Francisco
+        login: octocat
+        name: monalisa octocat
+        node_id: MDQ6VXNlcjE=
+        organizations_url: https://api.github.com/users/octocat/orgs
+        owned_private_repos: 100
+        plan:
+          collaborators: 0
+          name: Medium
+          private_repos: 20
+          space: 400
+        private_gists: 81
+        public_gists: 1
+        public_repos: 2
+        received_events_url: https://api.github.com/users/octocat/received_events
+        repos_url: https://api.github.com/users/octocat/repos
+        site_admin: false
+        starred_url: https://api.github.com/users/octocat/starred{/owner}{/repo}
+        subscriptions_url: https://api.github.com/users/octocat/subscriptions
+        total_private_repos: 100
+        two_factor_authentication: true
+        type: User
+        updated_at: "2008-01-14T04:33:35Z"
+        url: https://api.github.com/users/octocat
+    private-user-response-with-public-profile-information:
+      summary: Response with public profile information
+      value:
+        avatar_url: https://github.com/images/error/octocat_happy.gif
+        bio: There once was...
+        blog: https://github.com/blog
+        company: GitHub
+        created_at: "2008-01-14T04:33:35Z"
+        email: octocat@github.com
+        events_url: https://api.github.com/users/octocat/events{/privacy}
+        followers: 20
+        followers_url: https://api.github.com/users/octocat/followers
+        following: 0
+        following_url: https://api.github.com/users/octocat/following{/other_user}
+        gists_url: https://api.github.com/users/octocat/gists{/gist_id}
+        gravatar_id: ""
+        hireable: false
+        html_url: https://github.com/octocat
+        id: 1
+        location: San Francisco
+        login: octocat
+        name: monalisa octocat
+        node_id: MDQ6VXNlcjE=
+        organizations_url: https://api.github.com/users/octocat/orgs
+        public_gists: 1
+        public_repos: 2
+        received_events_url: https://api.github.com/users/octocat/received_events
+        repos_url: https://api.github.com/users/octocat/repos
+        site_admin: false
+        starred_url: https://api.github.com/users/octocat/starred{/owner}{/repo}
+        subscriptions_url: https://api.github.com/users/octocat/subscriptions
+        type: User
+        updated_at: "2008-01-14T04:33:35Z"
+        url: https://api.github.com/users/octocat
+  responses:
+    forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/basic-error'
+      description: Forbidden
+    not_modified:
+      description: Not modified
+    requires_authentication:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/basic-error'
+      description: Requires authentication
+  schemas:
+    basic-error:
+      description: Basic Error
+      properties:
+        documentation_url:
+          type: string
+        message:
+          type: string
+        status:
+          type: string
+        url:
+          type: string
+      title: Basic Error
+      type: object
+    private-user:
+      description: Private User
+      properties:
+        avatar_url:
+          example: https://github.com/images/error/octocat_happy.gif
+          format: uri
+          type: string
+        bio:
+          example: There once was...
+          nullable: true
+          type: string
+        blog:
+          example: https://github.com/blog
+          nullable: true
+          type: string
+        business_plus:
+          type: boolean
+        collaborators:
+          example: 8
+          type: integer
+        company:
+          example: GitHub
+          nullable: true
+          type: string
+        created_at:
+          example: "2008-01-14T04:33:35Z"
+          format: date-time
+          type: string
+        disk_usage:
+          example: 10000
+          type: integer
+        email:
+          example: octocat@github.com
+          format: email
+          nullable: true
+          type: string
+        events_url:
+          example: https://api.github.com/users/octocat/events{/privacy}
+          type: string
+        followers:
+          example: 20
+          type: integer
+        followers_url:
+          example: https://api.github.com/users/octocat/followers
+          format: uri
+          type: string
+        following:
+          example: 0
+          type: integer
+        following_url:
+          example: https://api.github.com/users/octocat/following{/other_user}
+          type: string
+        gists_url:
+          example: https://api.github.com/users/octocat/gists{/gist_id}
+          type: string
+        gravatar_id:
+          example: 41d064eb2195891e12d0413f63227ea7
+          nullable: true
+          type: string
+        hireable:
+          nullable: true
+          type: boolean
+        html_url:
+          example: https://github.com/octocat
+          format: uri
+          type: string
+        id:
+          example: 1
+          format: int64
+          type: integer
+        ldap_dn:
+          type: string
+        location:
+          example: San Francisco
+          nullable: true
+          type: string
+        login:
+          example: octocat
+          type: string
+        name:
+          example: monalisa octocat
+          nullable: true
+          type: string
+        node_id:
+          example: MDQ6VXNlcjE=
+          type: string
+        notification_email:
+          example: octocat@github.com
+          format: email
+          nullable: true
+          type: string
+        organizations_url:
+          example: https://api.github.com/users/octocat/orgs
+          format: uri
+          type: string
+        owned_private_repos:
+          example: 100
+          type: integer
+        plan:
+          properties:
+            collaborators:
+              type: integer
+            name:
+              type: string
+            private_repos:
+              type: integer
+            space:
+              type: integer
+          required:
+            - collaborators
+            - name
+            - space
+            - private_repos
+          type: object
+        private_gists:
+          example: 81
+          type: integer
+        public_gists:
+          example: 1
+          type: integer
+        public_repos:
+          example: 2
+          type: integer
+        received_events_url:
+          example: https://api.github.com/users/octocat/received_events
+          format: uri
+          type: string
+        repos_url:
+          example: https://api.github.com/users/octocat/repos
+          format: uri
+          type: string
+        site_admin:
+          type: boolean
+        starred_url:
+          example: https://api.github.com/users/octocat/starred{/owner}{/repo}
+          type: string
+        subscriptions_url:
+          example: https://api.github.com/users/octocat/subscriptions
+          format: uri
+          type: string
+        total_private_repos:
+          example: 100
+          type: integer
+        twitter_username:
+          example: monalisa
+          nullable: true
+          type: string
+        two_factor_authentication:
+          example: true
+          type: boolean
+        type:
+          example: User
+          type: string
+        updated_at:
+          example: "2008-01-14T04:33:35Z"
+          format: date-time
+          type: string
+        url:
+          example: https://api.github.com/users/octocat
+          format: uri
+          type: string
+        user_view_type:
+          type: string
+      required:
+        - avatar_url
+        - events_url
+        - followers_url
+        - following_url
+        - gists_url
+        - gravatar_id
+        - html_url
+        - id
+        - node_id
+        - login
+        - organizations_url
+        - received_events_url
+        - repos_url
+        - site_admin
+        - starred_url
+        - subscriptions_url
+        - type
+        - url
+        - bio
+        - blog
+        - company
+        - email
+        - followers
+        - following
+        - hireable
+        - location
+        - name
+        - public_gists
+        - public_repos
+        - created_at
+        - updated_at
+        - collaborators
+        - disk_usage
+        - owned_private_repos
+        - private_gists
+        - total_private_repos
+        - two_factor_authentication
+      title: Private User
+      type: object
+    public-user:
+      additionalProperties: false
+      description: Public User
+      properties:
+        avatar_url:
+          format: uri
+          type: string
+        bio:
+          nullable: true
+          type: string
+        blog:
+          nullable: true
+          type: string
+        collaborators:
+          example: 3
+          type: integer
+        company:
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        disk_usage:
+          example: 1
+          type: integer
+        email:
+          format: email
+          nullable: true
+          type: string
+        events_url:
+          type: string
+        followers:
+          type: integer
+        followers_url:
+          format: uri
+          type: string
+        following:
+          type: integer
+        following_url:
+          type: string
+        gists_url:
+          type: string
+        gravatar_id:
+          nullable: true
+          type: string
+        hireable:
+          nullable: true
+          type: boolean
+        html_url:
+          format: uri
+          type: string
+        id:
+          format: int64
+          type: integer
+        location:
+          nullable: true
+          type: string
+        login:
+          type: string
+        name:
+          nullable: true
+          type: string
+        node_id:
+          type: string
+        notification_email:
+          format: email
+          nullable: true
+          type: string
+        organizations_url:
+          format: uri
+          type: string
+        owned_private_repos:
+          example: 2
+          type: integer
+        plan:
+          properties:
+            collaborators:
+              type: integer
+            name:
+              type: string
+            private_repos:
+              type: integer
+            space:
+              type: integer
+          required:
+            - collaborators
+            - name
+            - space
+            - private_repos
+          type: object
+        private_gists:
+          example: 1
+          type: integer
+        public_gists:
+          type: integer
+        public_repos:
+          type: integer
+        received_events_url:
+          format: uri
+          type: string
+        repos_url:
+          format: uri
+          type: string
+        site_admin:
+          type: boolean
+        starred_url:
+          type: string
+        subscriptions_url:
+          format: uri
+          type: string
+        total_private_repos:
+          example: 2
+          type: integer
+        twitter_username:
+          nullable: true
+          type: string
+        type:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        url:
+          format: uri
+          type: string
+        user_view_type:
+          type: string
+      required:
+        - avatar_url
+        - events_url
+        - followers_url
+        - following_url
+        - gists_url
+        - gravatar_id
+        - html_url
+        - id
+        - node_id
+        - login
+        - organizations_url
+        - received_events_url
+        - repos_url
+        - site_admin
+        - starred_url
+        - subscriptions_url
+        - type
+        - url
+        - bio
+        - blog
+        - company
+        - email
+        - followers
+        - following
+        - hireable
+        - location
+        - name
+        - public_gists
+        - public_repos
+        - created_at
+        - updated_at
+      title: Public User
+      type: object
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+externalDocs:
+  description: GitHub Enterprise Developer Docs
+  url: https://docs.github.com/enterprise-server@3.16/rest/

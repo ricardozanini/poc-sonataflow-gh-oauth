@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.acme.poc.sonataflow</groupId>
+    <artifactId>poc-sonataflow-gh-oauth</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>POC - SonataFlow GitHub OAuth Integration</name>
+    <modules>
+        <module>flow-gh</module>
+        <module>get-consent-web</module>
+    </modules>
+    <scm>
+        <connection>:git:git@github.com:ricardozanini/poc-sonataflow-gh-oauth.git</connection>
+        <developerConnection>scm:git:git@github.com:ricardozanini/poc-sonataflow-gh-oauth.git</developerConnection>
+        <url>https://github.com/ricardozanini/poc-sonataflow-gh-oauth</url>
+        <tag>1.0.0-SNAPSHOT</tag>
+    </scm>
+    <properties>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
+        <skipITs>true</skipITs>
+        <surefire-plugin.version>3.5.2</surefire-plugin.version>
+        <kie.version>9.102.0.redhat-00005</kie.version>
+        <kie.tooling.version>1.35.0</kie.tooling.version>
+    </properties>
+
+
+</project>
+
