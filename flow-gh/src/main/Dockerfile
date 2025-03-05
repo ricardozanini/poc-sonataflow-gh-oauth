@@ -15,6 +15,20 @@
 # specific language governing permissions and limitations
 # under the License.
 
+# Build command:
+# cd flow-gh/src/main
+# docker build --tag quay.io/ricardozanini/poc-sonataflow-gh-oauth-flow:1.0.0.Alpha .
+
+# Run command:
+# docker run --rm -it \
+  #  -p 8080:8080 \
+  #  -e KOGITO_SERVICE_URL=http://localhost:8080 \
+  #  -v $(pwd)/resources/application.properties:/deployments/application.properties:ro \
+  #  -e JAVA_OPTS="-Dquarkus.config.locations=file:/deployments/application.properties \
+  #                -Dquarkus.http.host=0.0.0.0 \
+  #                -Djava.util.logging.manager=org.jboss.logmanager.LogManager" \
+  #  quay.io/ricardozanini/poc-sonataflow-gh-oauth-flow:1.0.0.Alpha
+
 FROM registry.redhat.io/openshift-serverless-1/logic-swf-builder-rhel8:1.34.0 AS builder
 
 # variables that can be overridden by the builder
