@@ -26,8 +26,6 @@
         <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
-        <kie.version>9.102.0.redhat-00005</kie.version>
-        <kie.tooling.version>1.35.0</kie.tooling.version>
     </properties>
 
 
