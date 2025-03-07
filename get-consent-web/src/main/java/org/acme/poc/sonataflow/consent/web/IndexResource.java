@@ -19,10 +19,13 @@ public class IndexResource {
     @ConfigProperty(name = "org.acme.poc.sonataflow.consent.web.github.client_id")
     String clientId;
 
+    @ConfigProperty(name = "org.acme.poc.sonataflow.consent.web.github.scopes")
+    String scopes;
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance get() {
-        return index.data("clientId", clientId);
+        return index.data("clientId", clientId).data("scopes", scopes);
     }
 
 }
